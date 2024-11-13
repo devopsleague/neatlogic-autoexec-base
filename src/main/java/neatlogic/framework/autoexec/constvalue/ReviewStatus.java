@@ -23,9 +23,9 @@ import neatlogic.framework.util.$;
 import java.util.List;
 
 public enum ReviewStatus implements IEnum {
-    WAITING("waiting", "待审核"),
-    PASSED("passed", "已通过"),
-    FAILED("failed", "enum.autoexec.reviewstatus.failed ");
+    WAITING("waiting", "nfac.reviewstatus.waiting"),
+    PASSED("passed", "term.diagram.status.passed"),
+    FAILED("failed", "nfac.reviewstatus.failed");
     private final String value;
     private final String text;
 
