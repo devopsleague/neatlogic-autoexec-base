@@ -310,6 +310,8 @@ public interface AutoexecJobMapper {
     int insertJobInvoke(AutoexecJobInvokeVo invokeVo);
 
     Integer insertIgnoreJobPhaseNodeRunner(AutoexecJobPhaseNodeRunnerVo nodeRunnerVo);
+    
+    Integer batchInsertJobPhaseNodeRunner(List<AutoexecJobPhaseNodeRunnerVo> nodeRunnerVo);
 
     Integer insertJobPhaseRunner(@Param("jobId") Long jobId, @Param("jobGroupId") Long jobGroupId, @Param("jobPhaseId") Long jobPhaseId, @Param("runnerMapId") Long runnerMapId, @Param("lcd") Date lcd);
 
@@ -320,6 +322,8 @@ public interface AutoexecJobMapper {
     Integer insertJobPhase(AutoexecJobPhaseVo jobVo);
 
     Integer insertJobPhaseNode(AutoexecJobPhaseNodeVo jobVo);
+
+    Integer batchInsertJobPhaseNode(List<AutoexecJobPhaseNodeVo> nodeList);
 
     Integer insertJobPhaseOperation(AutoexecJobPhaseOperationVo operationVo);
 

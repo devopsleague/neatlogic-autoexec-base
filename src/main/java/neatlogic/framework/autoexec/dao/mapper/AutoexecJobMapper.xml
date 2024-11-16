@@ -2431,8 +2431,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.-->
                 #{sort})
     </insert>
 
-    <insert id="insertJobPhaseNode"
-            parameterType="neatlogic.framework.autoexec.dto.job.AutoexecJobPhaseNodeVo">
+    <insert id="insertJobPhaseNode" parameterType="neatlogic.framework.autoexec.dto.job.AutoexecJobPhaseNodeVo">
         INSERT INTO `autoexec_job_phase_node` (`id`,
                                                `job_id`,
                                                `job_phase_id`,
@@ -2457,6 +2456,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.-->
                 #{resourceId},
                 #{lcd},
                 #{status})
+    </insert>
+
+    <insert id="batchInsertJobPhaseNode" parameterType="neatlogic.framework.autoexec.dto.job.AutoexecJobPhaseNodeVo">
+        INSERT INTO `autoexec_job_phase_node` (`id`,
+                                               `job_id`,
+                                               `job_phase_id`,
+                                               `host`,
+                                               `port`,
+                                               `protocol_id`,
+                                               `name`,
+                                               `type`,
+                                               `user_name`,
+                                               `resource_id`,
+                                               `lcd`,
+                                               `status`)
+        VALUES   <foreach collection="list" item="node" separator="),(" open="(" close=")">
+                #{node.id},
+                #{node.jobId},
+                #{node.jobPhaseId},
+                #{node.host},
+                #{node.port},
+                #{node.protocolId},
+                #{node.nodeName},
+                #{node.nodeType},
+                #{node.userName},
+                #{node.resourceId},
+                #{node.lcd},
+                #{node.status}
+            </foreach>
+        ON DUPLICATE KEY UPDATE
+        `status` = VALUES(`status`),
+        `start_time` = VALUES(start_time),
+        `end_time` = VALUES(end_time),
+        `is_delete` = 0,
+        `lcd` = VALUES(lcd)
+
     </insert>
 
     <insert id="insertJobPhaseOperation"
@@ -2519,6 +2554,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.-->
             parameterType="neatlogic.framework.autoexec.dto.job.AutoexecJobPhaseNodeRunnerVo">
         INSERT ignore INTO `autoexec_job_phase_node_runner` (`job_id`, `job_phase_id`, `node_id`, `runner_map_id`)
         VALUES (#{jobId}, #{jobPhaseId}, #{nodeId}, #{runnerMapId})
+    </insert>
+
+    <insert id="batchInsertJobPhaseNodeRunner" parameterType="neatlogic.framework.autoexec.dto.job.AutoexecJobPhaseNodeVo">
+        INSERT ignore INTO `autoexec_job_phase_node_runner` (`job_id`, `job_phase_id`, `node_id`, `runner_map_id`)
+        VALUES
+            <foreach collection="list" item="nodeRunner" separator="),(" open="(" close=")">
+                #{nodeRunner.jobId}, #{nodeRunner.jobPhaseId}, #{nodeRunner.nodeId}, #{nodeRunner.runnerMapId}
+            </foreach>
     </insert>
 
     <insert id="insertJobPhaseRunner">
